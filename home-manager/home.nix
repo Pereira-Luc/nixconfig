@@ -80,14 +80,6 @@
     EDITOR = "nvim";
   };
 
-  programs.nixvim = { # this doesn't work
-    options = {
-      number = true;         # Show line numbers
-      relativenumber = true; # Show relative line numbers
-      shiftwidth = 2;        # Tab width should be 2
-      termguicolors = true;
-    };
-  };
 
   programs.zoxide = {
       enable = true;
