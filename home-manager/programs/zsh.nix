@@ -12,6 +12,8 @@
     shellAliases = {
       ll = "ls -l";
       nixreload = "sudo nixos-rebuild switch --flake ~/.config/nixconfig/#mainNixos";
+      cat = "bat";
+      cd = "z";
     };
     history = {
       size = 10000;
@@ -23,7 +25,10 @@
       plugins = [ "git" ];
       theme = "simple";
     };
-
-    ## Custom ZSH Theme Configuration
+    initExtra = ''
+      if [ -z "$TMUX" ]; then
+        exec tmux 
+      fi
+    '';
   };
 }
