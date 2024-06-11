@@ -10,6 +10,9 @@
 
     # Mappings
     ./mappings/mappings.nix
+
+    #options
+    ./options.nix
   ];
 
   colorschemes.dracula.enable = true;
@@ -17,5 +20,4 @@
   plugins = {
     lualine.enable = true;
   };  
-
 }
