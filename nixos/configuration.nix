@@ -234,6 +234,7 @@
     ripgrep
     pavucontrol
     xorg.xbacklight
+    openvpn
   ];
 
 

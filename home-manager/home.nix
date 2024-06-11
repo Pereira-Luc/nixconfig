@@ -57,6 +57,8 @@
     pkgs.bat
     pkgs.unzip
     pkgs.github-desktop
+    pkgs.protonvpn-gui
+    pkgs.plex-media-player
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -104,8 +106,8 @@
   gtk.iconTheme.name = "Dracula";
 
   # Set the cursor theme to breeze
-  gtk.cursorTheme.package = pkgs.breeze-hacked-cursor-theme;
-  gtk.cursorTheme.name = "breeze-hacked";
+  gtk.cursorTheme.package = pkgs.bibata-cursors;
+  gtk.cursorTheme.name = "Bibata-Modern-Ice";
 
 
 
