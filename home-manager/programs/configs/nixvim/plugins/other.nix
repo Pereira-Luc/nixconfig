@@ -1,7 +1,7 @@
 {
   plugins = {
-    dashboard = {
-      enable = true;
-    };
-  }; 
+    dashboard.enable = true;
+    commentary.enable = true;
+    intellitab.enable = true;
+  };
 }
