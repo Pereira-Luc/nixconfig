@@ -12,6 +12,7 @@
         nixd.enable = true;
         prolog-ls.enable = true;
         ruff-lsp.enable = true;
+        tsserver.enable = true;
       };
       keymaps.lspBuf = {
         "gd" = "definition";
@@ -23,7 +24,7 @@
     };
     lsp-lines = {
       enable = true;
-      currentLine = true;
+      currentLine = false;
     };
     rust-tools.enable = true;
   };
