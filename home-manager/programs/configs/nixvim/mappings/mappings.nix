@@ -19,5 +19,29 @@
       action = "<cmd>set nu!<CR>";
       options.desc = "Toggle line numbers";
     }
+    {
+      key = "<C-s>";
+      action = "<cmd>w<CR>";
+      options.desc = "Save file";
+    }
+    {
+      key = "<C-q>";
+      action = "<cmd>q<CR>";
+      options.desc = "Quit file";
+    }
+    {
+      mode = "n";
+      key = "<leader>/";
+      action = "gcc";
+      options.desc = "Toggle Comments";
+      options.remap = true;
+    }
+    {
+      mode = "v";
+      key = "<leader>/";
+      action = "gc";
+      options.desc = "Toggle Comments";
+      options.remap = true;
+    }
   ];
 }
