@@ -59,6 +59,7 @@
     pkgs.github-desktop
     pkgs.protonvpn-gui
     pkgs.plex-media-player
+    pkgs.nodejs_22
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -100,8 +101,6 @@
   # Set the cursor theme to breeze
   gtk.cursorTheme.package = pkgs.bibata-cursors;
   gtk.cursorTheme.name = "Bibata-Modern-Ice";
-
-
 
   # Enable the GNOME keyring daemon.
   services.gnome-keyring.enable = true;
