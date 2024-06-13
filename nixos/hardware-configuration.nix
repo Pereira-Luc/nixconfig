@@ -27,8 +27,8 @@
     fileSystems."/mnt/data" = 
     {
       device = "/dev/disk/by-uuid/18B8F0BEB8F09C06";
-      fsType = "ntfs";
-      options = [ "windows_names" "compression" "big_writes" ];  # NTFS-specific options
+      fsType = "ntfs-3g";
+      options = [ "windows_names" "compression" "big_writes" "uid=1000" "gid=100" "user" "exec" "umask=000 0 0" ];  # NTFS-specific options
     };
 
   swapDevices = [ ];
