@@ -9,8 +9,8 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       inputs.home-manager.nixosModules.home-manager
+      inputs.erosanix.nixosModules.protonvpn
     ];
-
 
   # Add Java
   programs.java = { enable = true; package = pkgs.openjdk; };
@@ -23,7 +23,6 @@
       zerix = import ../home-manager/home.nix;
     };
   };
-
 
 
   #################################### awesomeWM config ##############################################
@@ -131,13 +130,10 @@
   i18n.defaultLocale = "en_US.UTF-8";
 
 
-
   # Nvidia Stuff
   # Enable OpenGL
-  hardware.opengl = {
+  hardware.graphics = {
     enable = true;
-    driSupport = true;
-    driSupport32Bit = true;
   };
 
   # Load nvidia driver for Xorg and Wayland
@@ -164,8 +160,8 @@
   # Gaming Stuff
   programs.steam.enable = true;
   programs.steam.gamescopeSession = {
-    enable = true;
-    args = [ "--hdr-enabled" "-W 2560" "-H 1440" "-r 240" "" ];
+     enable = true;
+     args = [ "-W 2560" "-H 1440" "-r 240" "" ];
   };
   
 
@@ -185,8 +181,29 @@
   services.printing.enable = true;
 
   # Enable sound with pipewire.
-  hardware.pulseaudio.enable = true;
+  hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
+
+  services.pipewire = {
+     enable = true;
+     alsa.enable = true;
+     alsa.support32Bit = true;
+     pulse.enable = true;
+     jack.enable = true;
+      
+
+    extraConfig.pipewire.adjust-sample-rate = {
+        "context.properties" = {
+          "default.clock.rate" = 48000;
+          "defautlt.allowed-rates" = [ 192000 48000 44100 ];
+          #"defautlt.allowed-rates" = [ 192000 ];
+          #"default.clock.quantum" = 32;
+          #"default.clock.min-quantum" = 32;
+          #"default.clock.max-quantum" = 32;
+        };
+      };
+  };
+
   
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
@@ -234,11 +251,27 @@
     pavucontrol
     xorg.xbacklight
     openvpn
+    openresolv
+    update-resolv-conf
     xclip
     mangohud
+    unigine-heaven
     gamescope-wsi
+    zed-editor
+    easyeffects
+
+    wireguard-tools
+    nvtopPackages.nvidia
+    xdg-desktop-portal-gtk
+
+    vlc
 
     gnome.mutter
+    btop
+    stress-ng
+
+    #nodePackages.canvas
+    nodePackages.typescript
 
     # For HyperLand
     # waybar
@@ -246,6 +279,11 @@
     # libnotify
     #rofi-wayland
   ];
+
+  ############################### VPN STUFF ####################################
+  
+  
+  ##############################################################################
 
 
   systemd = {

@@ -12,6 +12,8 @@
     shellAliases = {
       ll = "ls -l";
       nixreload = "sudo nixos-rebuild switch --flake ~/.config/nixconfig/#mainNixos";
+      nixupdate = "sudo nixos-rebuild switch --upgrade --flake ~/.config/nixconfig/#mainNixos";
+      wb = "python /home/zerix/Documents/Dev/webpConverter/webpConverter.py";
       cat = "bat";
       cd = "z";
     };

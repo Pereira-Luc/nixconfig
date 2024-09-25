@@ -23,7 +23,7 @@
   # You should not change this value, even if you update Home Manager. If you do
   # want to update the value, then make sure to first check the Home Manager
   # release notes.
-  home.stateVersion = "23.11"; # Please read the comment before changing.
+  home.stateVersion = "24.05"; # Please read the comment before changing.
 
    nixpkgs.config.allowUnfree = true;
 
@@ -56,10 +56,25 @@
     pkgs.tmux
     pkgs.bat
     pkgs.unzip
+    pkgs.zip
     pkgs.github-desktop
-    pkgs.protonvpn-gui
     pkgs.plex-media-player
     pkgs.nodejs_22
+
+    pkgs.google-chrome
+
+    pkgs.libgcc
+    pkgs.gcc
+    pkgs.gnumake
+    pkgs.jetbrains.webstorm
+
+    (pkgs.python311.withPackages (ppkgs: [
+      ppkgs.numpy
+      ppkgs.pyautogui
+      ppkgs.pynput
+      ppkgs.pygame
+      ppkgs.pip
+    ]))
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -101,6 +116,13 @@
   # Set the cursor theme to breeze
   gtk.cursorTheme.package = pkgs.bibata-cursors;
   gtk.cursorTheme.name = "Bibata-Modern-Ice";
+
+  home.pointerCursor = {
+    gtk.enable = true;
+    package = pkgs.bibata-cursors;
+    name = "Bibata-Modern-Ice";
+    size = 22;
+  };
 
   # Enable the GNOME keyring daemon.
   services.gnome-keyring.enable = true;
