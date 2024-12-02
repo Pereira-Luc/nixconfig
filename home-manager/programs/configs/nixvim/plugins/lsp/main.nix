@@ -10,7 +10,7 @@
         gopls.enable = true;
         kotlin-language-server.enable = true;
         nixd.enable = true;
-        prolog-ls.enable = true;
+	#prolog-ls.enable = true;
         ruff-lsp.enable = true;
         tsserver.enable = true;
       };
@@ -24,7 +24,7 @@
     };
     lsp-lines = {
       enable = true;
-      currentLine = false;
+      #currentLine = false;
     };
     rust-tools.enable = true;
   };

@@ -60,13 +60,21 @@
     pkgs.github-desktop
     pkgs.plex-media-player
     pkgs.nodejs_22
+    pkgs.okular
+    pkgs.libreoffice
+    pkgs.flameshot
+    pkgs.obsidian
+    pkgs.binutils
+    pkgs.alsa-utils
 
     pkgs.google-chrome
+    #pkgs.ryujinx
 
     pkgs.libgcc
     pkgs.gcc
     pkgs.gnumake
     pkgs.jetbrains.webstorm
+    pkgs.protonvpn-gui
 
     (pkgs.python311.withPackages (ppkgs: [
       ppkgs.numpy
@@ -74,7 +82,23 @@
       ppkgs.pynput
       ppkgs.pygame
       ppkgs.pip
+      ppkgs.jupyter
+      ppkgs.ipykernel
     ]))
+
+    ## Stuff for gpu passthrough VM
+    pkgs.qemu_kvm
+
+    ## Stuff for cpp
+    pkgs.clang-tools
+    pkgs.gcc
+    pkgs.libcxx
+
+    #pkgs.cudatoolkit
+    #pkgs.haskellPackages.cuda
+
+
+
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -91,6 +115,15 @@
     #   org.gradle.daemon.idletimeout=3600000
     # '';
   };
+
+
+## for gpu pass 
+dconf.settings = {
+  "org/virt-manager/virt-manager/connections" = {
+    autoconnect = ["qemu:///system"];
+    uris = ["qemu:///system"];
+  };
+};
 
   home.sessionVariables = {
     EDITOR = "nvim";

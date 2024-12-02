@@ -24,12 +24,13 @@
     };
   };
 
+  
 
   #################################### awesomeWM config ##############################################
   # Overlays are a way to override attributes of packages. This is often useful
-  nixpkgs.overlays = [
-    (final: prev: {
-      awesomeGit = prev.awesome.overrideAttrs (old: rec {
+  nixpkgs.overlays = [  
+  (final: prev: {
+      awesomeGit = prev.awesome.overrideAttrs (old:  {
         pname = "awesomeGit";
         src = prev.fetchFromGitHub {
           owner = "awesomeWM";
@@ -60,9 +61,9 @@
   ];
 
   services.xserver.windowManager.awesome = {
-    enable = true;
-    package = pkgs.awesomeGit;
-    luaModules = with pkgs.luaPackages; [ luarocks luadbi-mysql ];
+   enable = true;
+   package = pkgs.awesomeGit;
+   luaModules = with pkgs.luaPackages; [ luarocks luadbi-mysql ];
   };
 
   services.picom = {
@@ -84,30 +85,35 @@
       "95:class_g = 'Thunar'"
     ];
   };
+
+  xdg.portal = {
+    enable = true;
+    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+  };
  
   # Enable the X11 windowing system.
   services.xserver.enable = true;
   #################################### awesomeWM config ##############################################
   #################################### HyperLand config ##############################################
-  # programs.hyprland = {
-  #   enable = true;
-  #   xwayland.enable = true;
-  # };
+   # programs.hyprland = {
+   #   enable = false;
+   #   xwayland.enable = true;
+   # };
 
-  # environment.sessionVariables = {
-  #   WLR_NO_HARDWARE_CURSORS = "1";
-  #   NIXOS_OZONE_WL = "1";
-  # };
+   # environment.sessionVariables = {
+   #   WLR_NO_HARDWARE_CURSORS = "1";
+   #   NIXOS_OZONE_WL = "1";
+   # };
 
-  # xdg.portal.enable = true;
+  #xdg.portal.enable = true;
   # xdg.portal.extraPortals = [pkgs.xdg-desktop-portal-gtk ];
-  # services.pipewire = {
-  #   enable = true;
-  #   alsa.enable = true;
-  #   alsa.support32Bit = true;
-  #   pulse.enable = true;
-  #   jack.enable = true;
-  # };
+   # services.pipewire = {
+   #    enable = true;
+   #    alsa.enable = true;
+   #    alsa.support32Bit = true;
+   #    pulse.enable = true;
+   #    jack.enable = true;
+   # };
   ################################### HyperLand config ###############################################
 
   # Enable the Flakes feature and the accompanying new nix command-line tool
@@ -128,6 +134,7 @@
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
+  
 
 
   # Nvidia Stuff
@@ -135,6 +142,8 @@
   hardware.graphics = {
     enable = true;
   };
+
+  hardware.nvidia-container-toolkit.enable = true;
 
   # Load nvidia driver for Xorg and Wayland
   services.xserver.videoDrivers = ["nvidia"];
@@ -151,8 +160,9 @@
     nvidiaSettings = true;
 
     # Optionally, you may need to select the appropriate driver version for your specific GPU.
-    package = config.boot.kernelPackages.nvidiaPackages.production;
+    #package = config.boot.kernelPackages.nvidiaPackages.production;
   };
+  nixpkgs.config.cudaSupport = true;
   
   programs.zsh.enable = true;
   users.defaultUserShell = pkgs.zsh;
@@ -170,7 +180,6 @@
   #services.xserver.desktopManager.deepin.enable = true;
 
   services.displayManager.sddm.enable = true;
-
   # Configure keymap in X11
   services.xserver.xkb = {
     layout = "us";
@@ -181,27 +190,27 @@
   services.printing.enable = true;
 
   # Enable sound with pipewire.
-  hardware.pulseaudio.enable = false;
+  # hardware.pulseaudio.enable = true;
   security.rtkit.enable = true;
 
   services.pipewire = {
-     enable = true;
-     alsa.enable = true;
-     alsa.support32Bit = true;
-     pulse.enable = true;
-     jack.enable = true;
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+    jack.enable = true;
       
 
-    extraConfig.pipewire.adjust-sample-rate = {
-        "context.properties" = {
-          "default.clock.rate" = 48000;
-          "defautlt.allowed-rates" = [ 192000 48000 44100 ];
-          #"defautlt.allowed-rates" = [ 192000 ];
-          #"default.clock.quantum" = 32;
-          #"default.clock.min-quantum" = 32;
-          #"default.clock.max-quantum" = 32;
-        };
-      };
+   extraConfig.pipewire.adjust-sample-rate = {
+       "context.properties" = {
+         "default.clock.rate" = 48000;
+         "defautlt.allowed-rates" = [ 192000 48000 44100 ];
+         #"defautlt.allowed-rates" = [ 192000 ];
+         #"default.clock.quantum" = 32;
+         #"default.clock.min-quantum" = 32;
+         #"default.clock.max-quantum" = 32;
+       };
+     };
   };
 
   
@@ -259,12 +268,19 @@
     gamescope-wsi
     zed-editor
     easyeffects
+    gimp
+    inkscape
+    micromamba
+
+    jetbrains.pycharm-professional
 
     wireguard-tools
     nvtopPackages.nvidia
     xdg-desktop-portal-gtk
 
     vlc
+
+    #cachix
 
     gnome.mutter
     btop
@@ -273,18 +289,52 @@
     #nodePackages.canvas
     nodePackages.typescript
 
+    # Requirment for FlatPak
     # For HyperLand
-    # waybar
-    # dunst
-    # libnotify
-    #rofi-wayland
+     # waybar
+     # dunst
+     # libnotify
+     # rofi-wayland
+    ryujinx
+
+    #cudaPackages.cuda_nvcc
+
+
+    ## For GPU passthrough
+    virt-manager
+    busybox
+    procps gnumake util-linux m4 gperf unzip
+    cudaPackages.cudatoolkit
+    cudaPackages.cudatoolkit-legacy-runfile
+    #binutils
+  
+    #linuxPackages.nvidia_x12
+    libGLU libGL
+    xorg.libXi xorg.libXmu freeglut
+    xorg.libXext xorg.libX11 xorg.libXv xorg.libXrandr zlib 
+    ncurses5 stdenv.cc binutils
+    nix-ld 
+
+    patchelf
+    addOpenGLRunpath
   ];
+
+virtualisation.libvirtd = {
+  enable = true;
+  qemuOvmf = true;
+  qemuRunAsRoot = false;
+  onBoot = "ignore";
+  onShutdown = "shutdown";
+};
+programs.virt-manager.enable = true;
 
   ############################### VPN STUFF ####################################
   
   
   ##############################################################################
 
+
+  services.flatpak.enable = true;
 
   systemd = {
     user.services.polkit-gnome-authentication-agent-1 = {
@@ -304,6 +354,18 @@
 
   # NeoVim Settings
   environment.variables.EDITOR = "nvim";
+  
+  environment.variables = {
+    CUDA_PATH = "${pkgs.cudatoolkit}";
+    CPLUS_INCLUDE_PATH = "${pkgs.cudatoolkit}/include";
+    #LIBRARY_PATH = "${pkgs.cudatoolkit}/lib";
+    #EXTRA_LDFLAGS="-L/lib -L${pkgs.linuxPackages.nvidia_x11}/lib";
+    #EXTRA_CCFLAGS="-I/usr/include";
+    #LD_LIBRARY_PATH="${pkgs.linuxPackages.nvidia_x11}/lib:${pkgs.ncurses5}/lib";
+    #LD_LIBRARY_PATH = "${pkgs.linuxPackages.nvidia_x11}/lib:/run/opengl-driver/lib:${pkgs.cudatoolkit}/lib:${pkgs.ncurses5}/lib";
+    #LD_LIBRARY_PATH = lib.mkDefault "/nix/store/ys7psw9r5964i4zs6cn7rmmkk6572wmd-pipewire-1.2.5-jack/lib:${pkgs.linuxPackages.nvidia_x11}/lib:/run/opengl-driver/lib:${pkgs.cudatoolkit}/lib:${pkgs.ncurses5}/lib";
+  };
+
   programs.thunar.enable = true;
 
   programs.xfconf.enable = true;

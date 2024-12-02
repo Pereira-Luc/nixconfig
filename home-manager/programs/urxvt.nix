@@ -4,7 +4,7 @@
   programs.urxvt = {
     enable = true;
     scroll.lines = 20000;
-    package = pkgs.urxvt_font_size;
+    package = pkgs.rxvt-unicode-plugins.font-size;
 
     iso14755 = false;
 
