@@ -3,19 +3,27 @@
    
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
-   
-    nixvim = {
-      url = "github:nix-community/nixvim";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    
-    erosanix = {
-      url = "github:emmanuelrosa/erosanix";
-      inputs.nixpkgs.follows = "nixpkgs";
+    hyprland.url = "github:hyprwm/Hyprland";
+    nix-colors.url = "github:misterio77/nix-colors";
+    determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
+    nyx.url = "https://flakehub.com/f/chaotic-cx/nyx/0.1.2029";
+
+    hyprland-plugins = {
+      url = "github:hyprwm/Hyprland-plugins";
+      inputs.hyprland.follows = "hyprland";
     };
 
     home-manager = {
       url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    stylix = {
+      url = "github:danth/stylix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nixvim = {
+      url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -38,9 +46,13 @@
         specialArgs = { inherit inputs system; };
 
         modules = [
-          ./nixos/configuration.nix
+          ./hosts/default/configuration.nix
+          inputs.home-manager.nixosModules.home-manager
+
+          inputs.nix-colors.homeManagerModules.default
+          inputs.determinate.nixosModules.default
+          inputs.nyx.nixosModules.default
           #inputs.nixvim.homeManagerModules.nixvim
-	  #inputs.erosanix.nixosModules.protonvpn
         ];
       };
     };
